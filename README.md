@@ -1,2 +1,2 @@
-# collections_components
+# Search Components
 For storing reusable collections related components
