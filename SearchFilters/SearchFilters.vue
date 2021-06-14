@@ -18,8 +18,10 @@
 
 <script>
 import FilterGroup from '../FilterGroup/FilterGroup.vue'
+import FilterGroupGalleries from '../FilterGroupGalleries/FilterGroupGalleries.vue'
+
     export default {
-  components: { FilterGroup },
+  components: { FilterGroup, FilterGroupGalleries},
         props: ['filter_group_id', 'active_filters', 'params', 'api_base'],
         emits: ['filterSelected', 'filterRemoved'],
         data() {
