@@ -2,7 +2,7 @@
     <div class="flex flex-col">
         <div class="flex flex-row items-center space-x-2">
             <input type="checkbox" v-model="enabled">
-            <span>{{filter.name}}</span>
+            <div><span>{{filter.name}}</span><span v-if="filter.theme">{{`, ${filter.theme}`}}</span></div>
             <div v-if="filter.haschildren">
                 <button v-if="filter.children.length !=0" type="button" @click="openChildren = !openChildren">+</button>
             </div>

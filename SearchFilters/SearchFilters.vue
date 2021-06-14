@@ -7,7 +7,7 @@
     <filter-group :active_filters="active_filters" :values="null" endpoint="sorted_places" name="Place" query_parameter="place[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
     <filter-group :active_filters="active_filters" :values="null" endpoint="centuries" name="Century" query_parameter="century[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
     <filter-group :active_filters="active_filters" :values="null" endpoint="cultures" name="Culture" query_parameter="culture[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
-    <filter-group :active_filters="active_filters" :values="null" endpoint="sorted_galleries" name="Gallery" query_parameter="gallery[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
+    <filter-group-galleries :active_filters="active_filters" :values="null" endpoint="sorted_galleries" name="Gallery" query_parameter="gallery[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
 </div>
 
 
