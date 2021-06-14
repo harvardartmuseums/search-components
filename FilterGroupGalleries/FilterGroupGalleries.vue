@@ -57,7 +57,7 @@ import FilterButton from '../FilterButton/FilterButton.vue'
 
     export default {
         components: {FilterButton},
-        props: ['name', 'values', 'query_parameter', 'endpoint', 'active_filters'],
+        props: ['name', 'values', 'query_parameter', 'endpoint', 'active_filters', 'api_base'],
         emits: ['filterSelected', 'filterRemoved'],
         data() {
             return {
@@ -74,7 +74,7 @@ import FilterButton from '../FilterButton/FilterButton.vue'
                 this.$emit('filterRemoved', data)
             },
             fetchFilters(){
-                let filtersUrl = `${import.meta.env.VITE_API_BASE}/browse/filters/${this.endpoint}`
+                let filtersUrl = `${this.api_base}/browse/filters/${this.endpoint}`
                 fetch(`${filtersUrl}`, 
                         {credentials: "same-origin",
                         headers: {

@@ -13,7 +13,7 @@
         </div>
         <div class="w-full flex justify-center pb-8">
             <div v-if="showFilters" class="flex flex-col pt-5 pb-4">
-                <search-filters :active_filters="activeFilters" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved" :filter_group_id="filter_group_id" :params="params"/>
+                <search-filters :api_base="api_base" :active_filters="activeFilters" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved" :filter_group_id="filter_group_id" :params="params"/>
             </div>
             <div class="flex flex-grow flex-col">
                     <div class="w-full" v-masonry transition-duration="0.3s" item-selector=".item" fit-width="true">
@@ -52,6 +52,16 @@ import SearchItem from '../SearchItem/SearchItem.vue'
                 totalRecords: 0,
                 input: '',
                 showFilters: false,
+            }
+        },
+        computed: {
+            api_base(){
+                if (typeof process !== 'undefined'){
+                    return process.env.MIX_API_BASE
+                }
+                else {
+                    return import.meta.env.VITE_API_BASE
+                }
             }
         },
         methods: {
@@ -115,7 +125,7 @@ import SearchItem from '../SearchItem/SearchItem.vue'
                 }
                 parameters.append('load_amount', this.loadAmount)
                 parameters.append('offset', this.offset)
-                let searchUrl = `${import.meta.env.VITE_API_BASE}/browse?${parameters.toString()}`
+                let searchUrl = `${this.api_base}/browse?${parameters.toString()}`
                 fetch(`${searchUrl}`, 
                         {credentials: "same-origin",
                         headers: {
@@ -155,7 +165,7 @@ import SearchItem from '../SearchItem/SearchItem.vue'
                 }
                 const importParams = new URLSearchParams(queryString)
                 const entries = importParams.entries()
-                fetch(`${import.meta.env.VITE_API_BASE}/browse/filterlookup${queryString}`, 
+                fetch(`${this.api_base}/browse/filterlookup${queryString}`, 
                         {credentials: "same-origin",
                         headers: {
                         'Accept': 'application/json'
