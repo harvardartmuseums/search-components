@@ -24,7 +24,7 @@
     </div>
     <div class="flex flex-col" v-if="showFilterGroup">
         <input v-model="searchTerm" type="search" @input="fuzzySearch"/>
-        <filter-button v-for="filter in filters" v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters" />
+        <filter-button v-for="filter in results.splice(0, this.limit)"  v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters" />
     </div>
 </template>
 
@@ -39,9 +39,11 @@ import Fuse from 'fuse.js'
         data() {
             return {
                 filtersComplete: false,
+                results: [],
                 filters: [],
                 showFilterGroup: false,
                 searchTerm: '',
+                limit: 5,
             }
         },
         methods: {
@@ -61,7 +63,17 @@ import Fuse from 'fuse.js'
                         })
                 .then(res => res.json()
                 .then(res => {
-                    this.filters = res;
+                    this.filters = Object.keys(res).map(key => res[key]);
+                    this.results = Object.keys(res).map(key => res[key]);
+                    const options = {
+                            ignoreLocation: true,
+                            threshold: 0.4,
+                            keys: [
+                                "name",
+                            ]
+                        }
+                    const fuse = new Fuse(this.filters, options)
+                    this.fuse = fuse 
                     this.filtersComplete = true;
 			    }
             ))},
@@ -83,10 +95,19 @@ import Fuse from 'fuse.js'
                         }
                 },
             fuzzySearch(){
-                console.log("change!");
-                this.filters = this.fuse.search(this.searchTerm)
-            },
-
+                if(this.searchTerm == ''){
+                    this.limit = 5;
+                    this.results = this.filters
+                }
+                else {
+                    var results = this.fuse.search(this.searchTerm)
+                        console.log(results)
+                        results = results.map(i => this.filters[i.refIndex])
+                        this.limit = results.length;
+                        this.results = results; 
+                    }
+        
+                },
             },
         mounted() {
             if(!this.values){
@@ -95,16 +116,8 @@ import Fuse from 'fuse.js'
             if(this.values){    
                 this.filtersComplete = true
                 this.filters = this.values
+                this.results = this.values
             }
         },
-        created() {
-             const options = {
-                    keys: [
-                        "name",
-                    ]
-                }
-             const fuse = new Fuse(this.filters, options)
-             this.fuse = fuse 
-        }
     }
 </script>
