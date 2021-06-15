@@ -23,12 +23,14 @@
                 </button>
     </div>
     <div class="flex flex-col" v-if="showFilterGroup">
+        <input v-model="searchTerm" type="search" @input="fuzzySearch"/>
         <filter-button v-for="filter in filters" v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters" />
     </div>
 </template>
 
 <script>
 import FilterButton from '../FilterButton/FilterButton.vue'
+import Fuse from 'fuse.js'
 
     export default {
         components: {FilterButton},
@@ -39,6 +41,7 @@ import FilterButton from '../FilterButton/FilterButton.vue'
                 filtersComplete: false,
                 filters: [],
                 showFilterGroup: false,
+                searchTerm: '',
             }
         },
         methods: {
@@ -78,7 +81,12 @@ import FilterButton from '../FilterButton/FilterButton.vue'
                         else {
                             return false
                         }
-                }
+                },
+            fuzzySearch(){
+                console.log("change!");
+                this.filters = this.fuse.search(this.searchTerm)
+            },
+
             },
         mounted() {
             if(!this.values){
@@ -88,6 +96,15 @@ import FilterButton from '../FilterButton/FilterButton.vue'
                 this.filtersComplete = true
                 this.filters = this.values
             }
+        },
+        created() {
+             const options = {
+                    keys: [
+                        "name",
+                    ]
+                }
+             const fuse = new Fuse(this.filters, options)
+             this.fuse = fuse 
         }
     }
 </script>
