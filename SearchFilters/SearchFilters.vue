@@ -1,12 +1,12 @@
 <template>
 <div v-if="!filter_group_id" class="flex flex-col">
-    <filter-group :api_base="api_base" :active_filters="active_filters" :values="null" endpoint="classifications" name="Classifications" query_parameter="classification[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
-    <filter-group :api_base="api_base" :active_filters="active_filters" :values="null" endpoint="worktypes" name="Work Type" query_parameter="worktype[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
-    <filter-group :api_base="api_base" :active_filters="active_filters" :values="null" endpoint="mediumstechniques" name="Technique / Medium" query_parameter="technique[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
-    <filter-group :api_base="api_base" :active_filters="active_filters" :values="null" endpoint="periods" name="Period" query_parameter="period[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
-    <filter-group :api_base="api_base" :active_filters="active_filters" :values="null" endpoint="sorted_places" name="Place" query_parameter="place[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
-    <filter-group :api_base="api_base" :active_filters="active_filters" :values="null" endpoint="centuries" name="Century" query_parameter="century[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
-    <filter-group :api_base="api_base" :active_filters="active_filters" :values="null" endpoint="cultures" name="Culture" query_parameter="culture[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
+    <filter-group :api_base="api_base" :active_filters="active_filters" :values="null" :flat="false" endpoint="classifications" name="Classifications" query_parameter="classification[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
+    <filter-group :api_base="api_base" :active_filters="active_filters" :values="null" :flat="false" endpoint="worktypes" name="Work Type" query_parameter="worktype[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
+    <filter-group :api_base="api_base" :active_filters="active_filters" :values="null" :flat="false" endpoint="mediumstechniques" name="Technique / Medium" query_parameter="technique[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
+    <filter-group :api_base="api_base" :active_filters="active_filters" :values="null" :flat="false" endpoint="periods" name="Period" query_parameter="period[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
+    <filter-group :api_base="api_base" :active_filters="active_filters" :values="null" flat="places" endpoint="sorted_places" name="Place" query_parameter="place[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
+    <filter-group :api_base="api_base" :active_filters="active_filters" :values="null" :flat="false" endpoint="centuries" name="Century" query_parameter="century[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
+    <filter-group :api_base="api_base" :active_filters="active_filters" :values="null" :flat="false" endpoint="cultures" name="Culture" query_parameter="culture[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
     <filter-group-galleries :api_base="api_base" :active_filters="active_filters" :values="null" endpoint="sorted_galleries" name="Gallery" query_parameter="gallery[]" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved"/>
 </div>
 

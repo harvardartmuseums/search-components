@@ -38,7 +38,7 @@ import FilterSearcher from '../FilterSearcher/FilterSearcher.vue'
 
     export default {
         components: {FilterButton, FilterSearcher},
-        props: ['name', 'values', 'query_parameter', 'endpoint', 'active_filters', 'api_base'],
+        props: ['name', 'values', 'query_parameter', 'endpoint', 'active_filters', 'api_base', 'flat'],
         emits: ['filterSelected', 'filterRemoved'],
         data() {
             return {
@@ -67,9 +67,28 @@ import FilterSearcher from '../FilterSearcher/FilterSearcher.vue'
                 .then(res => {
                     this.filters = Object.keys(res).map(key => res[key]);
                     this.results = JSON.parse(JSON.stringify(this.filters));
+                    if(this.flat){
+                        let flatFiltersUrl = `${this.api_base}/browse/filters/${this.flat}`
+                        fetch(`${flatFiltersUrl}`, 
+                                {credentials: "same-origin",
+                                headers: {
+                                'Accept': 'application/json'
+                                }
+                                })
+                        .then(res => res.json()
+                        .then(res => {
+                            this.flatFilters = Object.keys(res).map(key => res[key]);
+                            this.filtersComplete = true;
+                    })
+                )}
+                else {
                     this.filtersComplete = true;
+                }
 			    }
-            ))},
+            ))
+            
+             
+            },
             checkFilter(filter){
                 var relevant = this.active_filters.find(obj => {
                     if(filter.type == 'medium'){
