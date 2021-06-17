@@ -12,9 +12,14 @@
             <active-filters :active_filters="activeFilters" @filter-removed="onFilterRemoved" class="h-16 mb-8" />
         </div>
         <div class="w-full flex justify-center pb-8">
+            <transition name="slide">
             <div v-if="showFilters" class="flex flex-col pt-5 pb-4 w-72">
-                <search-filters class="w-32" :api_base="api_base" :active_filters="activeFilters" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved" :filter_group_id="filter_group_id" :params="params"/>
+       
+                <search-filters :api_base="api_base" :active_filters="activeFilters" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved" :filter_group_id="filter_group_id" :params="params"/>
+           
             </div>
+            </transition>
+            
             <div class="flex flex-grow flex-col">
                     <div class="w-full flex justify-center">
                         <div v-masonry transition-duration="0.3s" item-selector=".item" fit-width="true">
@@ -205,3 +210,14 @@ import SearchItem from '../SearchItem/SearchItem.vue'
         }
     }
 </script>
+
+<style lang="postcss">
+ .slide-enter-active, .slide-leave-active {
+  transition: width 1s, opacity 1.5s;
+ 
+}
+.slide-enter-from, .slide-leave-to{
+  width:0;
+  opacity: 0;
+}
+</style>
