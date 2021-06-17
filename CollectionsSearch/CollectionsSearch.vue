@@ -3,7 +3,7 @@
         <div class="flex flex-col items-center justify-center">
             <input v-model="input" type="search" :placeholder="placeholder" class="w-3/4 border-black border-4 h-12 p-4 focus:outline-black mb-4">
             <div class="w-3/4 flex justify-between items-center mb-4">
-                <button class="w-28 text-left" type="button" @click="showFilters = !showFilters">Show Filters</button>
+                <button class="w-28 text-left" type="button" @click="toggleFilters">Show Filters</button>
                 <div class="flex flex-grow justify-center">
                     <span>Showing {{totalRecords}} works.</span>
                 </div>
@@ -12,13 +12,15 @@
             <active-filters :active_filters="activeFilters" @filter-removed="onFilterRemoved" class="h-16 mb-8" />
         </div>
         <div class="w-full flex justify-center pb-8">
-            <div v-if="showFilters" class="flex flex-col pt-5 pb-4">
-                <search-filters :api_base="api_base" :active_filters="activeFilters" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved" :filter_group_id="filter_group_id" :params="params"/>
+            <div v-if="showFilters" class="flex flex-col pt-5 pb-4 w-72">
+                <search-filters class="w-32" :api_base="api_base" :active_filters="activeFilters" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved" :filter_group_id="filter_group_id" :params="params"/>
             </div>
             <div class="flex flex-grow flex-col">
-                    <div class="w-full" v-masonry transition-duration="0.3s" item-selector=".item" fit-width="true">
-                        <div v-masonry-tile class="item p-8 md:w-1/4" v-for="(item, index) in results" v-bind:key="index">
-                            <search-item :item="item" />
+                    <div class="w-full flex justify-center">
+                        <div v-masonry transition-duration="0.3s" item-selector=".item" fit-width="true">
+                            <div v-masonry-tile class="item p-8 md:w-96" v-for="(item, index) in results" v-bind:key="index">
+                                <search-item :item="item" />
+                            </div>
                         </div>
                     </div>
                 
@@ -147,6 +149,10 @@ import SearchItem from '../SearchItem/SearchItem.vue'
                     }
 			    }
             ))}, 500),
+        toggleFilters(){
+            this.showFilters = !this.showFilters
+            setTimeout( () => { this.$redrawVueMasonry() }, 500)
+        }
         },
         watch: {
             input: function() {
