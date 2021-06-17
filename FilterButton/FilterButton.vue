@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col mb-2">
+    <div class="flex flex-col pt-2">
         <div class="flex relative items-center mr-4">
             <input class="opacity-0 absolute left-0 top-0 h-6 w-6" type="checkbox" v-model="enabled" :id="`${query_parameter}-${filter.id}`">
             <div class="bg-white text-black border-2 border-black w-6 h-6 flex flex-shrink-0 justify-center items-center mr-2 focus-within:outline-black">
@@ -13,7 +13,17 @@
             </div>
             <label :for="`${query_parameter}-${filter.id}`" class="select-none"><span>{{filter.name}}</span><span v-if="filter.theme">{{`, ${filter.theme}`}}</span></label>
             <div v-if="filter.haschildren">
-                <button v-if="filter.children.length !=0" type="button" @click="openChildren = !openChildren">+</button>
+                <button class="text-black ml-2 focus:outline-black" v-if="filter.children.length !=0" type="button" @click="openChildren = !openChildren">
+                    <svg v-if="openChildren" class="w-3 h-3" fill="#000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 10 10" style="enable-background:new 0 0 10 10;" xml:space="preserve">
+                    <path d="M0,4h10v2H0V4z"/>
+                    </svg>
+                    <svg v-if="!openChildren" fill="#000" class="w-3 h-3" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 10 10" style="enable-background:new 0 0 10 10;" xml:space="preserve">
+                    <path d="M0,4h10v2H0V4z M4,10V0h2v10H4z"/>
+                    </svg>
+                    
+                </button>
             </div>
         </div>
         <div v-if="openChildren">
