@@ -23,7 +23,7 @@
                 </button>
     </div>
     <div class="flex flex-col" v-if="showFilterGroup">
-        <filter-searcher v-if="filtersComplete" @search-results="onSearchResults" :filters="filters" class="my-2"/>
+        <filter-searcher v-if="filtersComplete" @search-results="onSearchResults" :filters="flatFilters" class="my-2"/>
         <div class="flex-none">
             <div class="max-h-48 h-48 overflow-y-auto">
                 <filter-button v-for="filter in results"  v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters" />
@@ -82,6 +82,7 @@ import FilterSearcher from '../FilterSearcher/FilterSearcher.vue'
                     })
                 )}
                 else {
+                    this.flatFilters = JSON.parse(JSON.stringify(this.filters));
                     this.filtersComplete = true;
                 }
 			    }
