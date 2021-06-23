@@ -1,7 +1,7 @@
 <template>
     <div class="w-full">
         <div class="flex flex-col items-center justify-center">
-            <input v-model="input" type="search" :placeholder="placeholder" class="w-3/4 border-black border-4 h-12 p-4 focus:outline-black mb-4">
+            <input v-model="input" type="search" :placeholder="placeholder" class="w-full md:w-3/4 border-black border-4 h-12 p-2 md:p-4 focus:outline-black mb-2 md:mb-4">
             <div class="w-3/4 flex justify-between items-center mb-4">
                 <button class="w-28 text-left" type="button" @click="toggleFilters">Show Filters</button>
                 <div class="flex flex-grow justify-center">
@@ -23,7 +23,7 @@
             <div class="flex flex-grow flex-col">
                     <div class="w-full flex justify-center">
                         <div v-masonry transition-duration="0.3s" item-selector=".item" fit-width="true">
-                            <div v-masonry-tile class="item p-8 md:w-96" v-for="(item, index) in results" v-bind:key="index">
+                            <div v-masonry-tile class="item p-8 w-full md:w-96" v-for="(item, index) in results" v-bind:key="index">
                                 <search-item :item="item" />
                             </div>
                         </div>
