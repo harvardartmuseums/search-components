@@ -2,18 +2,31 @@
     <div class="w-full">
         <div class="flex flex-col items-center justify-center">
             <input v-model="input" type="search" :placeholder="placeholder" class="w-full md:w-3/4 border-black border-4 h-12 p-2 md:p-4 focus:outline-black mb-2 md:mb-4">
-            <div class="w-3/4 flex justify-between items-center mb-4">
-                <button class="w-28 text-left" type="button" @click="toggleFilters">Show Filters</button>
+            <div class="w-full relative md:w-3/4 flex justify-between items-center mb-4">
+                <button class="md:w-28 text-left" type="button" @click="toggleFilters">Show Filters</button>
                 <div class="flex flex-grow justify-center">
                     <span>Showing {{totalRecords}} works.</span>
                 </div>
-                <button class="w-28 text-right" type="button" @click="resetSearch">Reset</button>
+                <button class="md:w-28 text-right" type="button" @click="resetSearch">Reset</button>
+                <transition name="slide">
+                <div v-if="showFilters" class="flex md:hidden flex-col shadow-2xl w-full z-40 absolute left-0 top-0 bg-white">
+                    <div class="flex h-6 w-full justify-end items-center">
+                        <div class="justify-center">
+                            <button class="px-2 py-4" type="button"  @click="toggleFilters">X</button>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">      
+                        <search-filters :api_base="api_base" :active_filters="activeFilters" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved" :filter_group_id="filter_group_id" :params="params"/>
+                    </div>
+                </div>
+            </transition>
             </div>
-            <active-filters :active_filters="activeFilters" @filter-removed="onFilterRemoved" class="h-16 mb-8" />
+            <active-filters :active_filters="activeFilters" @filter-removed="onFilterRemoved" class="md:h-16 md:mb-8 flex-shrink" />
         </div>
+       
         <div class="w-full flex justify-center pb-8">
             <transition name="slide">
-            <div v-if="showFilters" class="flex flex-col pt-5 pb-4 w-72">
+            <div v-if="showFilters" class="hidden md:flex flex-col pt-5 pb-4 w-72">
        
                 <search-filters :api_base="api_base" :active_filters="activeFilters" @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved" :filter_group_id="filter_group_id" :params="params"/>
            
@@ -23,7 +36,7 @@
             <div class="flex flex-grow flex-col">
                     <div class="w-full flex justify-center">
                         <div v-masonry transition-duration="0.3s" item-selector=".item" fit-width="true">
-                            <div v-masonry-tile class="item p-8 w-full md:w-96" v-for="(item, index) in results" v-bind:key="index">
+                            <div v-masonry-tile class="item px-8 mb-4 md:mb-0 md:p-8 w-full md:w-96" v-for="(item, index) in results" v-bind:key="index">
                                 <search-item :item="item" />
                             </div>
                         </div>
@@ -213,11 +226,11 @@ import SearchItem from '../SearchItem/SearchItem.vue'
 
 <style lang="postcss">
  .slide-enter-active, .slide-leave-active {
-  transition: width 1s, opacity 1.5s;
+  transition: width .5s, opacity .25s;
  
 }
 .slide-enter-from, .slide-leave-to{
   width:0;
-  opacity: 0;
+  opacity:0;
 }
 </style>
