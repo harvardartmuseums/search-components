@@ -3,16 +3,20 @@
         <div class="flex flex-col items-center justify-center">
             <input v-model="input" type="search" :placeholder="placeholder" class="w-full md:w-3/4 border-black border-4 h-12 p-2 md:p-4 focus:outline-black mb-2 md:mb-4">
             <div class="w-full relative md:w-3/4 flex justify-between items-center mb-4">
-                <button class="md:w-28 text-left" type="button" @click="toggleFilters">Show Filters</button>
+                <button :class="showFilters ? 'border-t-2 shadow-inner-dark border-b-0' : 'border-b-4'" class="text-left font-bold h-11 bg-gray-500 rounded-sm text-white py-2 px-4  border-gray-700 text-sm focus:outline-black" type="button" @click="toggleFilters">Advanced Search</button>
                 <div class="flex flex-grow justify-center">
-                    <span>Showing {{totalRecords}} works.</span>
+                    <span class="text-gray-500">Showing {{formattedTotal}} works</span>
                 </div>
-                <button class="md:w-28 text-right" type="button" @click="resetSearch">Reset</button>
+
+                <button v-if="suppress_on_view" class="md:w-28 text-right" type="button" @click="resetSearch">Reset</button>
+                <on-view-toggle @filter-selected="onFilterSelected" @filter-removed="onFilterRemoved" v-else :active="onView" />
+
                 <transition name="slide">
-                <div v-if="showFilters" class="flex md:hidden flex-col shadow-2xl w-full z-40 absolute left-0 top-0 bg-white">
+                <div v-if="showFilters" class="flex md:hidden flex-col shadow-xl w-full z-40 absolute left-0 top-0 bg-white">
                     <div class="flex h-6 w-full justify-end items-center">
                         <div class="justify-center">
-                            <button class="px-2 py-4" type="button"  @click="toggleFilters">X</button>
+                            <button class="px-2 py-4" type="button"  @click="toggleFilters">
+                                <svg class="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><path fill="none" stroke="#000" stroke-miterlimit="10" d="M1 1l8.012 8.012m0-8.012L1 9.012"/></svg><span class="sr-only">Close Filters Menu</span></button>
                         </div>
                     </div>
                     <div class="px-6 pb-6">      
@@ -21,7 +25,7 @@
                 </div>
             </transition>
             </div>
-            <active-filters :active_filters="activeFilters" @filter-removed="onFilterRemoved" class="md:h-16 md:mb-8 flex-shrink" />
+            <active-filters :active_filters="activeFilters" @filter-removed="onFilterRemoved" class="md:mb-4 md:w-3/4 flex-shrink" />
         </div>
        
         <div class="w-full flex justify-center pb-8">
@@ -55,10 +59,11 @@ import debounce from 'lodash/debounce'
 import SearchFilters from '../SearchFilters/SearchFilters.vue'
 import ActiveFilters from '../ActiveFilters/ActiveFilters.vue'
 import SearchItem from '../SearchItem/SearchItem.vue'
+import OnViewToggle from '../OnViewToggle/OnViewToggle.vue'
 
     export default {
-        components: {SearchFilters, ActiveFilters, SearchItem},
-        props: ['context', 'url', 'filter_group_id', 'placeholder'],
+        components: {SearchFilters, ActiveFilters, SearchItem, OnViewToggle},
+        props: ['context', 'url', 'filter_group_id', 'placeholder', 'suppress_on_view'],
         data() {
             return {
                 results: [],
@@ -72,9 +77,13 @@ import SearchItem from '../SearchItem/SearchItem.vue'
                 totalRecords: 0,
                 input: '',
                 showFilters: false,
+                onView: false,
             }
         },
         computed: {
+            formattedTotal(){
+                return Intl.NumberFormat().format(this.totalRecords)
+            },
             api_base(){
                 if (typeof process !== 'undefined'){
                     return process.env.MIX_API_BASE
@@ -102,6 +111,9 @@ import SearchItem from '../SearchItem/SearchItem.vue'
                 console.log("filter added")
                 console.log(this.activeFilters)
                 this.offset = 0
+                if(data.filter_parameter == "onview"){
+                        this.onView = true
+                    }
                 this.search()
             },
             onFilterRemoved(filter){
@@ -126,6 +138,9 @@ import SearchItem from '../SearchItem/SearchItem.vue'
                     }
                     this.activeFilters.splice(activeIndex, 1)
                     this.offset = 0
+                    if(filter.filter_parameter == "onview"){
+                        this.onView = false
+                    }
                     this.search()
             },
             appendResults(){

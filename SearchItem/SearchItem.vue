@@ -12,16 +12,16 @@
           <!-- Need to add My Collections component! -->
         </figure>
           <a :href="`/collections/object/${item.objectid}?position={{position}}`">
-        <span class="artwork-grid__item-id">{{item.objectnumber}}</span>
+        <span class="artwork-grid__item-id text-gray-500">{{item.objectnumber}}</span>
         
-        <h4 class="artwork-grid__item-author">
+        <h4 class="artwork-grid__item-author text-gray-500 text-lg font-bold">
             <span v-for="(person,index) of item.people" v-bind:key="person.personid">{{person.displayname}}<span v-if="index != item.people.length - 1">, </span>
             </span>
         </h4>
         
-        <h3 class="artwork-grid__item-title">{{item.title}}</h3>
+        <h3 class="artwork-grid__item-title font-bold text-lg">{{item.title}}</h3>
         
-        <span class="artwork-grid__item-classification">{{item.classification}}</span>
+        <span class="artwork-grid__item-classification text-gray-500">{{item.classification}}</span>
       </a>
     </div>
 </template>
