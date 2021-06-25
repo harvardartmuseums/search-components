@@ -22,33 +22,36 @@
                     </span>
                 </button>
     </div>
-    <div class="flex flex-col" v-if="showFilterGroup">
-        <div class="flex flex-col">
-            <h4 class="text-lg">Lower Level</h4>
-            <filter-button v-for="filter in filters[0]" v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters"><span @v-if="'null' != filter.theme">, {{filter.theme}} </span></filter-button>
+    <div class="flex-none">
+        <div class="max-h-56 h-56 overflow-y-auto">
+            <div class="flex flex-col text-sm" v-if="showFilterGroup">
+                <div class="flex flex-col mt-4">
+                    <h4 class="font-bold">Lower Level</h4>
+                    <filter-button v-for="filter in filters[0]" v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters"/>
+                </div>
+                <div class="flex flex-col mt-4">
+                    <h4 class="font-bold">Level 1</h4>
+                    <filter-button v-for="filter in filters[1]" v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters" />
+                </div>
+                <div class="flex flex-col mt-4">
+                    <h4 class="font-bold ">Level 2</h4>
+                    <filter-button v-for="filter in filters[2]" v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters"/>
+                </div>
+                <div class="flex flex-col mt-4">
+                    <h4 class="font-bold">Level 3</h4>
+                    <filter-button v-for="filter in filters[3]" v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters" />
+                </div>
+                <div class="flex flex-col mt-4">
+                    <h4 class="font-bold">Level 4</h4>
+                    <filter-button v-for="filter in filters[4]" v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters" />
+                </div>
+                <div class="flex flex-col mt-4">
+                    <h4 class="font-bold">Level 5</h4>
+                    <filter-button v-for="filter in filters[5]" v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters">
+                    </filter-button>
+                </div>
+            </div>
         </div>
-        <div class="flex flex-col">
-            <h4 class="text-lg">Level 1</h4>
-            <filter-button v-for="filter in filters[1]" v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters"><span @v-if="'null' != filter.theme">, {{filter.theme}} </span></filter-button>
-        </div>
-        <div class="flex flex-col">
-            <h4 class="text-lg">Level 2</h4>
-            <filter-button v-for="filter in filters[2]" v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters"><span @v-if="'null' != filter.theme">, {{filter.theme}} </span></filter-button>
-        </div>
-        <div class="flex flex-col">
-            <h4 class="text-lg">Level 3</h4>
-            <filter-button v-for="filter in filters[3]" v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters"><span @v-if="'null' != filter.theme">, {{filter.theme}} </span></filter-button>
-        </div>
-        <div class="flex flex-col">
-            <h4 class="text-lg">Level 4</h4>
-            <filter-button v-for="filter in filters[4]" v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters"><span @v-if="'null' != filter.theme">, {{filter.theme}} </span></filter-button>
-        </div>
-        <div class="flex flex-col">
-            <h4 class="text-lg">Level 5</h4>
-            <filter-button v-for="filter in filters[5]" v-bind:key="filter.id" :filter="filter" :query_parameter="filter.type == 'medium' ? 'medium[]' : query_parameter" :active="checkFilter(filter)" @filter-enabled="onFilterEnabled" @filter-disabled="onFilterDisabled" :active_filters="active_filters">
-            </filter-button>
-        </div>
-
     </div>
 </template>
 

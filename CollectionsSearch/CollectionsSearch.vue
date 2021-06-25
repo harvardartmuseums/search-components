@@ -3,7 +3,7 @@
         <div class="flex flex-col items-center justify-center">
             <input v-model="input" type="search" :placeholder="placeholder" class="w-full md:w-3/4 border-black border-4 h-12 p-2 md:p-4 focus:outline-black mb-2 md:mb-4">
             <div class="w-full relative md:w-3/4 flex justify-between items-center mb-4">
-                <button :class="showFilters ? 'border-t-2 shadow-inner-dark border-b-0' : 'border-b-4'" class="text-left font-bold h-11 bg-gray-500 rounded-sm text-white py-2 px-4  border-gray-700 text-sm focus:outline-black" type="button" @click="toggleFilters">Advanced Search</button>
+                <button :class="showFilters ? 'border-t-2 shadow-inner-dark border-b-0' : 'border-b-4'" class="text-left font-bold h-11 bg-gray-500 rounded-sm text-white py-2 px-4  border-gray-700 text-sm focus:outline-black" type="button" @click="toggleFilters">Show Filters</button>
                 <div class="flex flex-grow justify-center">
                     <span class="text-gray-500">Showing {{formattedTotal}} works</span>
                 </div>
@@ -47,7 +47,7 @@
                     </div>
                 
                 <div v-if="totalRecords > results.length" class="w-full flex justify-center mt-4">
-                    <button type="button" class="p-4 bg-black text-white" @click="appendResults">Load More</button>    
+                    <button type="button" class="p-4 bg-black text-white focus:outline-black" @click="appendResults">Load More</button>    
                 </div>
             </div>
         </div>
@@ -174,21 +174,22 @@ import OnViewToggle from '../OnViewToggle/OnViewToggle.vue'
                     this.noResults = res.info.totalrecords === 0;
                     if(appendResults){
                         this.results = this.results.concat(res.records);
-                        setTimeout(() =>{ this.$redrawVueMasonry() }, 500)
+                        setTimeout(() =>{ this.$redrawVueMasonry() }, 750)
                     }
                     else {
                         this.results = res.records
-                        setTimeout( () => { this.$redrawVueMasonry() }, 500)
+                        setTimeout( () => { this.$redrawVueMasonry() }, 750)
                     }
 			    }
             ))}, 500),
         toggleFilters(){
             this.showFilters = !this.showFilters
-            setTimeout( () => { this.$redrawVueMasonry() }, 500)
+            setTimeout( () => { this.$redrawVueMasonry() }, 750)
         }
         },
         watch: {
             input: function() {
+                this.offset = 0
                 this.params = []
                 this.search()
             },
