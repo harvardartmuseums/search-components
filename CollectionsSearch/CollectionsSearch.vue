@@ -2,10 +2,10 @@
     <div class="w-full">
         <div class="flex flex-col items-center justify-center">
             <input v-model="input" type="search" :placeholder="placeholder" class="w-full md:w-3/4 border-black border-4 h-12 p-2 md:p-4 focus:outline-black mb-2 md:mb-4">
-            <div class="w-full relative md:w-3/4 flex justify-between items-center mb-4">
-                <button :class="showFilters ? 'border-t-2 shadow-inner-dark border-b-0' : 'border-b-4'" class="text-left font-bold h-11 bg-gray-500 rounded-sm text-white py-2 px-4  border-gray-700 text-sm focus:outline-black" type="button" @click="toggleFilters">Show Filters</button>
+            <div class="w-full relative text-xs md:w-3/4 flex justify-between items-center mb-4">
+                <button :class="showFilters ? 'border-t-2 shadow-inner-dark border-b-0' : 'border-b-4'" class="text-left font-bold h-11 bg-gray-500 rounded-sm text-white py-2 px-4  border-gray-700 text-sm focus:outline-black" type="button" @click="toggleFilters">Filters</button>
                 <div class="flex flex-grow justify-center">
-                    <span class="text-gray-500">Showing {{formattedTotal}} works</span>
+                    <span class="text-gray-500 text-xs md:text-base text-center">Showing {{formattedTotal}} works</span>
                 </div>
 
                 <button v-if="suppress_on_view" class="md:w-28 text-right" type="button" @click="resetSearch">Reset</button>
@@ -40,7 +40,7 @@
             <div class="flex flex-grow flex-col">
                     <div class="w-full flex justify-center">
                         <div v-masonry transition-duration="0.3s" item-selector=".item" fit-width="true">
-                            <div v-masonry-tile class="item px-8 mb-4 md:mb-0 md:p-8 w-full md:w-96" v-for="(item, index) in results" v-bind:key="index">
+                            <div v-masonry-tile class="item px-8 mb-4 md:mb-0 md:p-8 w-full md:w-72 lg:w-96" v-for="(item, index) in results" v-bind:key="index">
                                 <search-item :item="item" />
                             </div>
                         </div>
@@ -241,12 +241,19 @@ import OnViewToggle from '../OnViewToggle/OnViewToggle.vue'
 </script>
 
 <style lang="postcss">
- .slide-enter-active, .slide-leave-active {
-  transition: width .5s, opacity .25s;
- 
+ .slide-enter-active{
+  animation: menu-slide .5s;
 }
-.slide-enter-from, .slide-leave-to{
-  width:0;
-  opacity:0;
+
+.slide-leave-active {
+  animation: menu-slide .5s reverse;
+}
+@keyframes menu-slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 </style>
