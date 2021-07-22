@@ -40,7 +40,7 @@
             <div class="flex flex-grow flex-col">
                     <div class="w-full flex justify-center">
                         <div v-masonry transition-duration="0.3s" item-selector=".item" fit-width="true">
-                            <div v-masonry-tile class="item px-8 mb-4 md:mb-0 md:p-8 w-full md:w-72 lg:w-96" v-for="(item, index) in results" v-bind:key="index">
+                            <div v-masonry-tile class="item px-8 mb-4 md:mb-0 p-8 w-full md:w-72 lg:w-96" v-for="(item, index) in results" v-bind:key="index">
                                 <search-item :item="item" />
                             </div>
                         </div>
