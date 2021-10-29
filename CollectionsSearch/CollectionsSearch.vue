@@ -203,7 +203,13 @@ import OnViewToggle from '../OnViewToggle/OnViewToggle.vue'
                 if(this.filter_group_id){
                   queryString = `${queryString}&filter_group=${this.filter_group_id}`  
                 }
-                const importParams = new URLSearchParams(queryString)
+                let importParams = new URLSearchParams(queryString)
+                importParams.forEach(function(value, key) {
+                    if(key == 'topic[]'){
+                        importParams.set('custom[topic][]', value)
+                        importParams.delete(key)
+                    }
+                });
                 const entries = importParams.entries()
                 fetch(`${this.api_base}/browse/filterlookup${queryString}`, 
                         {credentials: "same-origin",

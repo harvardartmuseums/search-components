@@ -46,6 +46,7 @@ import FilterSearcher from '../FilterSearcher/FilterSearcher.vue'
                 results: [],
                 showFilterGroup: false,
                 limit: 5,
+                flatFilters: {},
             }
         },
         methods: {
