@@ -1,7 +1,14 @@
 <template>
     <div class="w-full">
         <div class="flex flex-col items-center justify-center">
-            <input v-model="input" type="search" :placeholder="placeholder" class="w-full md:w-3/4 border-black border-4 h-12 p-2 md:p-4 focus:outline-black mb-2 md:mb-4">
+            <label class="relative w-full md:w-3/4 leading-none mb-2 md:mb-4">
+                <span class="sr-only">Collections Search</span>
+                <input v-model="input" type="search" :placeholder="placeholder" class="w-full border-black border-4 h-12 p-2 md:p-4 focus:outline-black">
+                        <svg xmlns="http://www.w3.org/2000/svg" width=18 height=24 class="fill-current stroke-current text-hamdarkgray w-auto h-6 absolute top-1/2 transform -translate-y-1/2 right-3" viewBox="0 0 19 22">
+                            <path  d="M7.992 2.188c3.2 0 5.805 2.604 5.805 5.805 0 3.2-2.604 5.805-5.805 5.805-3.2 0-5.805-2.604-5.805-5.805 0-3.2 2.605-5.805 5.805-5.805m0-2C3.682.188.187 3.682.187 7.993s3.494 7.805 7.805 7.805 7.805-3.494 7.805-7.805S12.303.188 7.992.188z"/>
+                            <path fill="none" stroke-width="3" stroke-miterlimit="10" d="M17.024 20.95l-5.214-7.334"/>
+                        </svg>
+            </label>
             <div class="w-full relative text-xs md:w-3/4 flex justify-between items-center mb-4">
                 <button :class="showFilters ? 'border-t-2 shadow-inner-dark border-b-0' : 'border-b-4'" class="text-left font-bold h-11 bg-gray-500 rounded-sm text-white py-2 px-4  border-gray-700 text-sm focus:outline-black" type="button" @click="toggleFilters">Filters</button>
                 <div class="flex flex-grow justify-center">
@@ -201,7 +208,7 @@ import OnViewToggle from '../OnViewToggle/OnViewToggle.vue'
             if(this.url){
                 var queryString = this.url.substring(this.url.indexOf("?"))
                 if(this.filter_group_id){
-                  queryString = `${queryString}&filter_group=${this.filter_group_id}`  
+                  queryString = `${queryString}&filter_group=${this.filter_group_id}&group=${this.filter_group_id}`  
                 }
                 let importParams = new URLSearchParams(queryString)
                 importParams.forEach(function(value, key) {
@@ -246,7 +253,7 @@ import OnViewToggle from '../OnViewToggle/OnViewToggle.vue'
     }
 </script>
 
-<style lang="postcss">
+<style>
  .slide-enter-active{
   animation: menu-slide .5s;
 }

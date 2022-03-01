@@ -82,10 +82,10 @@
         }
 </script>
 
-<style lang="postcss">
+<style>
 
 input:checked + div svg {
-  @apply block;
+  display: block;
 }
 
 </style>
