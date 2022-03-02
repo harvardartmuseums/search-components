@@ -23,7 +23,7 @@
                 </button>
     </div>
     <div class="flex-none">
-        <div class="max-h-56 h-56 overflow-y-auto">
+        <div class="max-h-56 overflow-y-auto">
             <div class="flex flex-col text-sm" v-if="showFilterGroup">
                 <div class="flex flex-col mt-4">
                     <h4 class="font-bold">Lower Level</h4>
